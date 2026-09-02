@@ -1,0 +1,11 @@
+{
+  "name": "姫路西高校 入試カウントダウン",
+  "short_name": "入試カウントダウン",
+  "description": "姫路西高校 国際理学科の推薦入試までのカウントダウン",
+  "start_url": "/HimejiWest/",
+  "scope": "/HimejiWest/",
+  "display": "standalone",
+  "background_color": "#090d14",
+  "theme_color": "#141e30",
+  "orientation": "portrait"
+}
