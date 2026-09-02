@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- スマホ向け設定 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ブラウザの上部に表示されるタイトル -->
+  <title>姫路西高校 入試カウントダウン</title>
+
+  <style>
+    /* =========================
+       基本設定
+    ========================= */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        Meiryo,
+        sans-serif;
+
+      background:
+        radial-gradient(circle at top, #243b55 0%, #141e30 45%, #090d14 100%);
+
+      color: white;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      padding: 20px;
+    }
+
+
+    /* =========================
+       メインカード
+    ========================= */
+
+    .container {
+      width: min(100%, 430px);
+
+      background: rgba(255, 255, 255, 0.08);
+
+      border: 1px solid rgba(255, 255, 255, 0.15);
+
+      border-radius: 28px;
+
+      padding: 32px 24px;
+
+      text-align: center;
+
+      backdrop-filter: blur(12px);
+
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.35);
+    }
+
+
+    /* =========================
+       タイトル
+    ========================= */
+
+    .school {
+      font-size: 1.8rem;
+      font-weight: 700;
+
+      letter-spacing: 0.08em;
+
+      margin-bottom: 8px;
+    }
+
+    .department {
+      font-size: 0.95rem;
+
+      color: rgba(255, 255, 255, 0.7);
+
+      letter-spacing: 0.12em;
+
+      margin-bottom: 32px;
+    }
+
+
+    /* =========================
+       入試まで
+    ========================= */
+
+    .label {
+      font-size: 1rem;
+
+      color: rgba(255, 255, 255, 0.75);
+
+      margin-bottom: 8px;
+    }
+
+
+    /* =========================
+       残り日数
+    ========================= */
+
+    .days {
+      font-size: clamp(5rem, 25vw, 8rem);
+
+      font-weight: 800;
+
+      line-height: 1;
+
+      letter-spacing: -0.05em;
+
+      margin: 10px 0;
+    }
+
+    .days-unit {
+      font-size: 1.3rem;
+
+      color: rgba(255, 255, 255, 0.8);
+
+      margin-bottom: 28px;
+    }
+
+
+    /* =========================
+       残り時間
+    ========================= */
+
+    .time-box {
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+
+      gap: 8px;
+
+      margin-bottom: 28px;
+    }
+
+    .time-item {
+      background: rgba(255, 255, 255, 0.07);
+
+      border-radius: 14px;
+
+      padding: 12px 5px;
+    }
+
+    .time-number {
+      display: block;
+
+      font-size: 1.3rem;
+
+      font-weight: 700;
+    }
+
+    .time-label {
+      display: block;
+
+      font-size: 0.7rem;
+
+      color: rgba(255, 255, 255, 0.6);
+
+      margin-top: 3px;
+    }
+
+
+    /* =========================
+       入試日
+    ========================= */
+
+    .exam-date {
+      font-size: 1rem;
+
+      color: rgba(255, 255, 255, 0.8);
+
+      margin-bottom: 24px;
+    }
+
+
+    /* =========================
+       進捗バー
+    ========================= */
+
+    .progress-title {
+      text-align: left;
+
+      font-size: 0.8rem;
+
+      color: rgba(255, 255, 255, 0.65);
+
+      margin-bottom: 7px;
+    }
+
+    .progress-background {
+      width: 100%;
+
+      height: 9px;
+
+      background: rgba(255, 255, 255, 0.12);
+
+      border-radius: 999px;
+
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+
+      width: 0%;
+
+      border-radius: 999px;
+
+      background: linear-gradient(
+        90deg,
+        #6dd5fa,
+        #2980b9
+      );
+
+      transition: width 0.8s ease;
+    }
+
+
+    /* =========================
+       メッセージ
+    ========================= */
+
+    .message {
+      margin-top: 25px;
+
+      font-size: 0.9rem;
+
+      color: rgba(255, 255, 255, 0.75);
+
+      line-height: 1.7;
+    }
+
+
+    /* =========================
+       フッター
+    ========================= */
+
+    .footer {
+      margin-top: 22px;
+
+      font-size: 0.65rem;
+
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+
+    /* =========================
+       スマホ表示調整
+    ========================= */
+
+    @media (max-width: 380px) {
+
+      .container {
+        padding: 26px 18px;
+      }
+
+      .school {
+        font-size: 1.5rem;
+      }
+
+      .department {
+        font-size: 0.8rem;
+      }
+
+      .days {
+        font-size: 5rem;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+  <main class="container">
+
+    <!-- 学校名 -->
+    <div class="school">
+      姫路西高校
+    </div>
+
+    <!-- 学科 -->
+    <div class="department">
+      国際理学科
+    </div>
+
+
+    <!-- 入試まで -->
+    <div class="label">
+      推薦入試まで
+    </div>
+
+
+    <!-- 残り日数 -->
+    <div class="days" id="days">
+      -- 
+    </div>
+
+    <div class="days-unit">
+      日
+    </div>
+
+
+    <!-- 残り時間 -->
+    <div class="time-box">
+
+      <div class="time-item">
+        <span class="time-number" id="hours">
+          --
+        </span>
+
+        <span class="time-label">
+          時間
+        </span>
+      </div>
+
+
+      <div class="time-item">
+        <span class="time-number" id="minutes">
+          --
+        </span>
+
+        <span class="time-label">
+          分
+        </span>
+      </div>
+
+
+      <div class="time-item">
+        <span class="time-number" id="seconds">
+          --
+        </span>
+
+        <span class="time-label">
+          秒
+        </span>
+      </div>
+
+    </div>
+
+
+    <!-- 入試日 -->
+    <div class="exam-date">
+      2027年2月16日（火）
+    </div>
+
+
+    <!-- 進捗 -->
+    <div class="progress-title">
+      入試までのカウントダウン
+    </div>
+
+    <div class="progress-background">
+      <div
+        class="progress-bar"
+        id="progressBar">
+      </div>
+    </div>
+
+
+    <!-- メッセージ -->
+    <div class="message" id="message">
+      一日一日、積み重ねよう。
+    </div>
+
+
+    <!-- フッター -->
+    <div class="footer">
+      Exam Countdown / Himeji Nishi
+    </div>
+
+  </main>
+
+
+  <script>
+
+    /* =========================
+       設定
+    ========================= */
+
+    // 入試日時
+    //
+    // ※ 2027年2月16日の「午前0時」を基準にしています。
+    //
+    const examDate =
+      new Date("2027-02-16T00:00:00+09:00");
+
+
+    // このカウントダウンを始めた日
+    //
+    // 今日（2026年9月2日）を開始日として設定。
+    //
+    const startDate =
+      new Date("2026-09-02T00:00:00+09:00");
+
+
+    /* =========================
+       HTML要素を取得
+    ========================= */
+
+    const daysElement =
+      document.getElementById("days");
+
+    const hoursElement =
+      document.getElementById("hours");
+
+    const minutesElement =
+      document.getElementById("minutes");
+
+    const secondsElement =
+      document.getElementById("seconds");
+
+    const progressBar =
+      document.getElementById("progressBar");
+
+    const messageElement =
+      document.getElementById("message");
+
+
+    /* =========================
+       カウントダウン処理
+    ========================= */
+
+    function updateCountdown() {
+
+      // 現在時刻
+      const now = new Date();
+
+
+      // 入試までのミリ秒
+      const difference =
+        examDate.getTime() - now.getTime();
+
+
+      /* =========================
+         入試終了後
+      ========================= */
+
+      if (difference <= 0) {
+
+        daysElement.textContent = "0";
+
+        hoursElement.textContent = "00";
+
+        minutesElement.textContent = "00";
+
+        secondsElement.textContent = "00";
+
+        messageElement.textContent =
+          "推薦入試、おつかれさま！";
+
+        progressBar.style.width = "100%";
+
+        return;
+      }
+
+
+      /* =========================
+         日・時間・分・秒に変換
+      ========================= */
+
+      const totalSeconds =
+        Math.floor(difference / 1000);
+
+
+      const days =
+        Math.floor(
+          totalSeconds / (60 * 60 * 24)
+        );
+
+
+      const hours =
+        Math.floor(
+          (totalSeconds % (60 * 60 * 24))
+          / (60 * 60)
+        );
+
+
+      const minutes =
+        Math.floor(
+          (totalSeconds % (60 * 60))
+          / 60
+        );
+
+
+      const seconds =
+        totalSeconds % 60;
+
+
+      /* =========================
+         表示
+      ========================= */
+
+      daysElement.textContent =
+        days;
+
+      hoursElement.textContent =
+        String(hours).padStart(2, "0");
+
+      minutesElement.textContent =
+        String(minutes).padStart(2, "0");
+
+      secondsElement.textContent =
+        String(seconds).padStart(2, "0");
+
+
+      /* =========================
+         進捗率
+      ========================= */
+
+      const totalTime =
+        examDate.getTime() -
+        startDate.getTime();
+
+
+      const elapsedTime =
+        now.getTime() -
+        startDate.getTime();
+
+
+      let progress =
+        (elapsedTime / totalTime) * 100;
+
+
+      // 0～100%に収める
+      progress =
+        Math.max(
+          0,
+          Math.min(100, progress)
+        );
+
+
+      progressBar.style.width =
+        progress + "%";
+
+
+      /* =========================
+         残り日数によるメッセージ
+      ========================= */
+
+      if (days <= 30) {
+
+        messageElement.textContent =
+          "ラストスパート。ここからが勝負！🔥";
+
+      } else if (days <= 60) {
+
+        messageElement.textContent =
+          "残り2か月。仕上げていこう！💪";
+
+      } else if (days <= 100) {
+
+        messageElement.textContent =
+          "100日を切った。まだまだ伸びる！📚";
+
+      } else if (days <= 150) {
+
+        messageElement.textContent =
+          "一日一日、積み重ねよう。";
+
+      } else {
+
+        messageElement.textContent =
+          "まだ焦らなくて大丈夫。今できることを一つずつ。";
+      }
+
+    }
+
+
+    /* =========================
+       最初に実行
+    ========================= */
+
+    updateCountdown();
+
+
+    /* =========================
+       1秒ごとに更新
+    ========================= */
+
+    setInterval(
+      updateCountdown,
+      1000
+    );
+
+  </script>
+
+</body>
+</html>
